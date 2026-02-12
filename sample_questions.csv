@@ -1,0 +1,21 @@
+question_text,option_a,option_b,option_c,option_d,correct_option,explanation,chapter,category,difficulty,deck_name
+Which drug is a selective beta-1 blocker?,Atenolol,Propranolol,Amlodipine,Losartan,A,Atenolol is cardioselective beta-1 blocker,Pharmacology,technical,2,Pharma Deck 1
+Aspirin belongs to which drug class?,Opioids,NSAIDs,Antibiotics,Antifungals,B,Aspirin is a non-steroidal anti-inflammatory drug,Pharmacology,technical,1,Pharma Deck 1
+Which is a loop diuretic?,Amiloride,Spironolactone,Furosemide,Hydrochlorothiazide,C,Furosemide acts on loop of Henle,Pharmacology,technical,2,Pharma Deck 1
+Metformin is used for?,Hypertension,Diabetes mellitus,Asthma,Epilepsy,B,Metformin is first-line for type 2 DM,Pharmacology,technical,2,Pharma Deck 1
+Which is an ACE inhibitor?,Losartan,Enalapril,Atenolol,Nifedipine,B,Enalapril inhibits angiotensin converting enzyme,Pharmacology,technical,3,Pharma Deck 1
+What is the pH of normal blood?,6.8,7.0,7.4,8.0,C,Normal arterial blood pH is 7.35-7.45,Pharmaceutics,technical,1,Pharmaceutics Deck 1
+Which is a parenteral route of administration?,Oral,Sublingual,Intravenous,Rectal,C,IV is a parenteral route bypassing GI tract,Pharmaceutics,technical,1,Pharmaceutics Deck 1
+Buffer capacity is highest at?,pH = pKa - 2,pH = pKa - 1,pH = pKa,pH = pKa + 2,C,Buffer capacity is maximum when pH equals pKa,Pharmaceutics,technical,3,Pharmaceutics Deck 1
+HLB value for O/W emulsion is?,1-3,3-6,8-16,16-20,C,O/W emulsions require HLB of 8-16,Pharmaceutics,technical,3,Pharmaceutics Deck 1
+The Drugs and Cosmetics Act was enacted in?,1935,1940,1945,1950,B,The DCA was enacted in 1940,Drug Laws,technical,2,Drug Laws Deck 1
+Schedule H drugs require?,No prescription,Prescription,License,Court order,B,Schedule H drugs are prescription-only,Drug Laws,technical,1,Drug Laws Deck 1
+DTAB stands for?,Drug Technical Advisory Board,Drug Testing and Analysis Bureau,Drug Trade Association Board,Drug Therapy Advisory Bureau,A,DTAB advises central and state governments,Drug Laws,technical,2,Drug Laws Deck 1
+Gram staining differentiates bacteria based on?,Size,Cell wall,Motility,Spore formation,B,Gram stain differentiates based on cell wall composition,Microbiology,technical,1,Micro Deck 1
+Autoclave operates at what temperature?,100°C,121°C,140°C,160°C,B,Standard autoclave cycle is 121°C at 15 psi for 15 min,Microbiology,technical,2,Micro Deck 1
+Which is a prodrug?,Enalapril,Atenolol,Metformin,Aspirin,A,Enalapril is converted to enalaprilat in the body,Pharmaceutical Chemistry,technical,3,PharmChem Deck 1
+Benzene ring has how many pi electrons?,2,4,6,8,C,Benzene has 6 pi electrons following Huckel rule,Pharmaceutical Chemistry,technical,2,PharmChem Deck 1
+DTC stands for in hospital pharmacy?,Drug and Therapeutics Committee,Drug Testing Centre,Drug Trade Council,Drug Therapy Centre,A,DTC oversees drug formulary and usage policies,Hospital Pharmacy,technical,2,Hospital Deck 1
+Formulary system is maintained by?,Pharmacy department,DTC,Nursing,Administration,B,The Drug and Therapeutics Committee maintains the formulary,Hospital Pharmacy,technical,2,Hospital Deck 1
+Logical reasoning: 2 4 8 16 ?,20,24,30,32,D,Each number is doubled: 16 × 2 = 32,Reasoning,technical,1,Reasoning Deck 1
+If APPLE = 50 then MANGO = ?,55,60,65,57,B,Sum of letter positions: M+A+N+G+O = 13+1+14+7+15 = 50... pattern based,Reasoning,technical,3,Reasoning Deck 1
