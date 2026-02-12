@@ -17,14 +17,18 @@ class Settings(BaseSettings):
         env_file = ".env"
         extra = "allow"
 
+    # Add validator to fix DATABASE_URL automatically
+    @property
+    def fixed_database_url(self):
+        url = self.DATABASE_URL
+        if url.startswith("postgresql://"):
+            url = url.replace("postgresql://", "postgresql+psycopg://", 1)
+        return url
+
 settings = Settings()
 
-# Get DATABASE_URL
-DATABASE_URL = settings.DATABASE_URL
-
-# Fix for psycopg (version 3)
-if DATABASE_URL.startswith("postgresql://"):
-    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1)
+# Use the fixed URL
+DATABASE_URL = settings.fixed_database_url
 
 # Create engine
 engine = create_engine(DATABASE_URL)
