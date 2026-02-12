@@ -1,44 +1,24 @@
-"""
-Database configuration — single source of truth for engine, sessions, and Base.
-"""
-
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-from pydantic_settings import BaseSettings
-from functools import lru_cache
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
 
+# Get DATABASE_URL from environment variable
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-class Settings(BaseSettings):
-    DATABASE_URL: str = "postgresql://localhost/exam_engine"
-    SECRET_KEY: str = "change-me-in-production"
-    ADMIN_EMAIL: str = "admin@example.com"
-    ADMIN_PASSWORD: str = "changeme123"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440  # 24 hours
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set")
 
-    class Config:
-        env_file = ".env"
-        extra = "ignore"
+# Create engine
+engine = create_engine(DATABASE_URL)
 
-
-@lru_cache()
-def get_settings() -> Settings:
-    return Settings()
-
-
-settings = get_settings()
-
-engine = create_engine(
-    settings.DATABASE_URL.replace("postgresql://", "postgresql+psycopg://")    ,
-    pool_size=10,
-    max_overflow=20,
-    pool_pre_ping=True,
-)
-
+# Create session
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+# Base class for models
 Base = declarative_base()
 
-
+# Dependency for FastAPI
 def get_db():
     db = SessionLocal()
     try:
