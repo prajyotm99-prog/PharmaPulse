@@ -9,6 +9,10 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL environment variable is not set")
 
+# Fix for psycopg (version 3) - replace postgresql:// with postgresql+psycopg://
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1)
+
 # Create engine
 engine = create_engine(DATABASE_URL)
 
