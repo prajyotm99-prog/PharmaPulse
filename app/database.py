@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql://localhost/exam_engine"
     SECRET_KEY: str = "change-me-in-production"
     ADMIN_EMAIL: str = "admin@example.com"
-    ADMIN_PASSWORD: str = "admin123"
+    ADMIN_PASSWORD: str = "changeme123"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440  # 24 hours
 
     class Config:
@@ -27,14 +27,8 @@ def get_settings() -> Settings:
 
 settings = get_settings()
 
-db_url = settings.DATABASE_URL
-if db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql+psycopg://", 1)
-elif db_url.startswith("postgresql://"):
-    db_url = db_url.replace("postgresql://", "postgresql+psycopg://", 1)
-
 engine = create_engine(
-    db_url,
+    settings.DATABASE_URL.replace("postgresql://", "postgresql+psycopg://")    ,
     pool_size=10,
     max_overflow=20,
     pool_pre_ping=True,
