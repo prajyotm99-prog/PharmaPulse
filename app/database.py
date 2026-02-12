@@ -1,8 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Settings class
 class Settings(BaseSettings):
@@ -13,22 +16,30 @@ class Settings(BaseSettings):
     ADMIN_EMAIL: str = "admin@pharmapulse.com"
     ADMIN_PASSWORD: str = "AdminPass123!"
 
-    class Config:
-        env_file = ".env"
-        extra = "allow"
+    model_config = SettingsConfigDict(env_file=".env", extra="allow")
 
-    # Add validator to fix DATABASE_URL automatically
-    @property
-    def fixed_database_url(self):
-        url = self.DATABASE_URL
-        if url.startswith("postgresql://"):
-            url = url.replace("postgresql://", "postgresql+psycopg://", 1)
-        return url
+# Initialize settings
+try:
+    settings = Settings()
+    logger.info("Settings loaded successfully")
+except Exception as e:
+    logger.error(f"Failed to load settings: {e}")
+    raise
 
-settings = Settings()
+# Get and fix DATABASE_URL
+DATABASE_URL = settings.DATABASE_URL
+logger.info(f"Original DATABASE_URL starts with: {DATABASE_URL[:20]}...")
 
-# Use the fixed URL
-DATABASE_URL = settings.fixed_database_url
+# Fix for psycopg (version 3)
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1)
+    logger.info("Fixed DATABASE_URL to use postgresql+psycopg://")
+elif DATABASE_URL.startswith("postgres://"):
+    # Some providers use postgres:// instead of postgresql://
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+psycopg://", 1)
+    logger.info("Fixed DATABASE_URL from postgres:// to postgresql+psycopg://")
+
+logger.info(f"Final DATABASE_URL starts with: {DATABASE_URL[:30]}...")
 
 # Create engine
 engine = create_engine(DATABASE_URL)
