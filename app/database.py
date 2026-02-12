@@ -1,15 +1,28 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from pydantic_settings import BaseSettings
 import os
 
-# Get DATABASE_URL from environment variable
-DATABASE_URL = os.getenv("DATABASE_URL")
+# Settings class
+class Settings(BaseSettings):
+    DATABASE_URL: str
+    SECRET_KEY: str = "change-this-secret-key"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ADMIN_EMAIL: str = "admin@pharmapulse.com"
+    ADMIN_PASSWORD: str = "AdminPass123!"
 
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set")
+    class Config:
+        env_file = ".env"
+        extra = "allow"
 
-# Fix for psycopg (version 3) - replace postgresql:// with postgresql+psycopg://
+settings = Settings()
+
+# Get DATABASE_URL
+DATABASE_URL = settings.DATABASE_URL
+
+# Fix for psycopg (version 3)
 if DATABASE_URL.startswith("postgresql://"):
     DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1)
 
