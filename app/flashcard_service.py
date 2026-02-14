@@ -21,6 +21,7 @@ from app.schemas import (
     FlashcardSessionOut, FlashcardNextQuestion,
     FlashcardAnswerRequest, FlashcardAnswerResult, QuestionBrief,
 )
+from app.services.progress_service import ProgressService  # ✅ Added import
 
 
 def start_flashcard_session(db: Session, user_id: int, deck_id: int) -> FlashcardSessionOut:
@@ -150,6 +151,14 @@ def answer_flashcard(
     is_correct = req.selected_option == question.correct_option.value
 
     sq.last_attempted_at = dt.datetime.utcnow()
+
+    # ✅ ADDED: Track progress for mastery system
+    ProgressService.record_answer(
+        db=db,
+        user_id=user_id,
+        question_id=req.question_id,
+        is_correct=is_correct
+    )
 
     if is_correct:
         sq.status = FlashcardStatus.correct

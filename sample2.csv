@@ -1,0 +1,13 @@
+question_text,option_a,option_b,option_c,option_d,correct_option,explanation,chapter,category,difficulty,deck_name
+Which drug is a selective beta-1 blocker?,Atenolol,Propranolol,Amlodipine,Losartan,A,Atenolol selectively blocks beta-1 receptors in the heart.,Pharmacology,technical,2,Pharma Deck 6
+Heparin acts by enhancing?,Thrombin,Antithrombin III,Plasmin,Fibrin,B,Heparin enhances antithrombin III activity.,Pharmacology,technical,2,Pharma Deck 6
+Clopidogrel inhibits?,COX enzyme,P2Y12 receptor,GABA receptor,Alpha receptor,B,Clopidogrel blocks platelet P2Y12 receptors.,Pharmacology,technical,2,Pharma Deck 6
+Enteric coating dissolves in?,Acidic pH,Neutral pH,Alkaline pH,High temperature,C,Enteric coating dissolves in intestinal alkaline pH.,Pharmaceutics,technical,1,Pharma Deck 7
+Higuchi model explains?,Tablet hardness,Matrix drug release,Drug degradation,Stability testing,B,Higuchi equation explains diffusion-controlled release.,Pharmaceutics,technical,3,Pharma Deck 7
+Benzene contains how many pi electrons?,2,4,6,8,C,Benzene has 6 pi electrons following Huckel rule.,Pharmaceutical Chemistry,technical,2,Pharma Deck 8
+pKa represents?,Solubility,Acid strength,Density,Partition coefficient,B,pKa indicates acid dissociation strength.,Pharmaceutical Chemistry,technical,1,Pharma Deck 8
+Digitalis contains?,Alkaloids,Glycosides,Tannins,Saponins,B,Digitalis contains cardiac glycosides.,Pharmacognosy,technical,1,Pharma Deck 9
+Autoclave temperature is?,100C,121C,150C,80C,B,Standard autoclave temperature is 121C.,Microbiology,technical,1,Pharma Deck 10
+Schedule H drugs require?,No prescription,OTC sale,Prescription,Import license,C,Schedule H drugs require valid prescription.,Drug Laws,technical,1,Regulatory Deck 3
+Bioavailability of IV drug is?,50 percent,75 percent,100 percent,Depends,C,IV route provides 100 percent bioavailability.,Biopharmaceutics,technical,1,Clinical Deck 1
+Volume of distribution is?,Total body water,Plasma volume,Extracellular fluid,Depends,D,Vd can be greater than total body water for lipophilic drugs.,Biopharmaceutics,technical,2,Clinical Deck 1

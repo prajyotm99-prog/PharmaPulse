@@ -2,15 +2,15 @@
 All SQLAlchemy ORM models for the exam engine.
 """
 
-import datetime as dt
 from sqlalchemy import (
-    Column, Integer, String, Text, Boolean, DateTime, Float,
-    ForeignKey, Index, UniqueConstraint, Enum as SAEnum,
+    Column, Integer, String, Boolean, DateTime, 
+    ForeignKey, Text, Enum, UniqueConstraint, func, Index, Float
 )
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func as sql_func # Alternative if func is already used
 from app.database import Base
 import enum
-
+import datetime as dt
 
 # ── Enums ──────────────────────────────────────────────
 
@@ -45,7 +45,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), unique=True, nullable=False, index=True)
     hashed_password = Column(String(255), nullable=False)
-    role = Column(SAEnum(RoleEnum), default=RoleEnum.user, nullable=False)
+    role = Column(Enum(RoleEnum), default=RoleEnum.user, nullable=False)
     created_at = Column(DateTime, default=dt.datetime.utcnow)
 
 
@@ -60,10 +60,10 @@ class Question(Base):
     option_b = Column(Text, nullable=False)
     option_c = Column(Text, nullable=False)
     option_d = Column(Text, nullable=False)
-    correct_option = Column(SAEnum(CorrectOptionEnum), nullable=False)
+    correct_option = Column(Enum(CorrectOptionEnum), nullable=False)
     explanation = Column(Text, nullable=True)
     chapter = Column(String(255), nullable=False, index=True)
-    category = Column(SAEnum(CategoryEnum), nullable=False, index=True)
+    category = Column(Enum(CategoryEnum), nullable=False, index=True)
     difficulty = Column(Integer, nullable=False, index=True)
     created_at = Column(DateTime, default=dt.datetime.utcnow)
 
@@ -121,7 +121,7 @@ class FlashcardSessionQuestion(Base):
     id = Column(Integer, primary_key=True, index=True)
     session_id = Column(Integer, ForeignKey("flashcard_sessions.id", ondelete="CASCADE"), nullable=False)
     question_id = Column(Integer, ForeignKey("questions.id", ondelete="CASCADE"), nullable=False)
-    status = Column(SAEnum(FlashcardStatus), default=FlashcardStatus.pending, nullable=False)
+    status = Column(Enum(FlashcardStatus), default=FlashcardStatus.pending, nullable=False)
     shuffle_order = Column(Integer, nullable=False, default=0)
     last_attempted_at = Column(DateTime, nullable=True)
 
@@ -165,7 +165,7 @@ class TestAnswer(Base):
     id = Column(Integer, primary_key=True, index=True)
     attempt_id = Column(Integer, ForeignKey("test_attempts.id", ondelete="CASCADE"), nullable=False)
     question_id = Column(Integer, ForeignKey("questions.id", ondelete="CASCADE"), nullable=False)
-    selected_option = Column(SAEnum(CorrectOptionEnum), nullable=True)
+    selected_option = Column(Enum(CorrectOptionEnum), nullable=True)
     is_correct = Column(Boolean, nullable=True)
     answered_at = Column(DateTime, default=dt.datetime.utcnow)
 
@@ -221,7 +221,7 @@ class DailyTestAnswer(Base):
     id = Column(Integer, primary_key=True, index=True)
     attempt_id = Column(Integer, ForeignKey("daily_test_attempts.id", ondelete="CASCADE"), nullable=False)
     question_id = Column(Integer, ForeignKey("questions.id", ondelete="CASCADE"), nullable=False)
-    selected_option = Column(SAEnum(CorrectOptionEnum), nullable=True)
+    selected_option = Column(Enum(CorrectOptionEnum), nullable=True)
     is_correct = Column(Boolean, nullable=True)
     answered_at = Column(DateTime, default=dt.datetime.utcnow)
 
@@ -229,4 +229,20 @@ class DailyTestAnswer(Base):
 
     __table_args__ = (
         UniqueConstraint("attempt_id", "question_id", name="uq_daily_test_answer"),
+    )
+class UserQuestionProgress(Base):
+    __tablename__ = "user_question_progress"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    question_id = Column(Integer, ForeignKey("questions.id"), nullable=False)
+    
+    # Tracking
+    attempts = Column(Integer, default=0)
+    first_try_correct = Column(Boolean, default=False)
+    last_attempted = Column(DateTime(timezone=True), server_default=func.now())
+    
+    # Composite unique constraint
+    __table_args__ = (
+        UniqueConstraint('user_id', 'question_id', name='_user_question_uc'),
     )
